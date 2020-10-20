@@ -52,7 +52,7 @@
                                 <nav>
                                     <ul id="navigation">
                                         <li><a href="{{route('about')}}">我要領養</a></li>
-                                        <li><a href="#">領養資訊 <i class="ti-angle-down"></i></a>
+                                        <li><a href="javascript:function() { return false; }">領養資訊 <i class="ti-angle-down"></i></a>
                                             <ul class="submenu">
                                                 <li><a href="{{route('shelter-info')}}">收容所資訊</a></li>
                                                 <li><a href="https://www.ahiqo.ntpc.gov.tw/cht/index.php?code=list&flag=detail&ids=15&article_id=351">領養須知</a></li>
@@ -60,7 +60,23 @@
                                             </ul>
                                         </li>
 
-                                        <li><a href="login.html">會員登入</a></li>
+                                        <li>
+                                            @auth
+                                                <a href="javascript:function() { return false; }">Hi {{Auth::user()->name}} <i class="ti-angle-down"></i></a>
+                                                    <ul class="submenu">
+                                                        <li><a href="{{route('dashboard')}}">會員專區</a></li>
+                                                        <li>
+                                                            <form method="POST" action="{{route('logout')}}">
+                                                                @csrf
+                                                                <a href="{{route('logout')}}" onclick="event.preventDefault(); this.closest('form').submit();">登出</a>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                            @else
+                                                <a href="{{route('login')}}">會員登入</a>
+                                            @endauth
+
+                                        </li>
                                     </ul>
                                 </nav>
                             </div>
