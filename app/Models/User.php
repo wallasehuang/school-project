@@ -57,4 +57,9 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function pets()
+    {
+        return $this->belongsToMany('App\Models\Pet', 'user_favorites', 'user_id', 'pet_id');
+    }
 }
