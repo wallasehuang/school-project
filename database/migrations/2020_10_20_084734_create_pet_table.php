@@ -16,6 +16,7 @@ class CreatePetTable extends Migration
         Schema::create('pets', function (Blueprint $table) {
             $table->id();
             $table->string('no');
+            $table->string('cover');
             $table->tinyInteger('category');
             $table->tinyInteger('color');
             $table->tinyInteger('body_type');

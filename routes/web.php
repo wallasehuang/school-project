@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PetController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,14 +19,19 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::get('/about', function(){
-    return view('about');
-})->name('about');
+Route::get('/about', [PetController::class, 'index'])->name('about');
+
+Route::post('/favorites', [PetController::class, 'favorites'])->name('favorites');
 
 Route::get('/shelter-info', function(){
     return view('shelter');
 })->name('shelter-info');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
+
+
+Route::get('pet-data', function(){
+    return App\Models\Pet::factory()
+        ->times(50)
+        ->create();
+});
