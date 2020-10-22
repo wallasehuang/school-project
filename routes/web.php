@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PetController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,11 +28,25 @@ Route::get('/shelter-info', function(){
     return view('shelter');
 })->name('shelter-info');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])
+    ->get('/dashboard', [UserController::class, 'dashboard'])->name('dashboard');
+
+Route::middleware(['auth:sanctum', 'verified'])
+    ->post('/comment', [CommentController::class, 'write'])->name('comment');
+
+Route::middleware(['auth:sanctum', 'verified'])
+    ->post('/user/update-profile', [UserController::class, 'updateProfile'])->name('user.update.profile');
+
+Route::middleware(['auth:sanctum', 'verified'])
+    ->post('/user/update-password', [UserController::class, 'updatePassword'])->name('user.update.password');
 
 
 Route::get('pet-data', function(){
     return App\Models\Pet::factory()
         ->times(50)
         ->create();
+});
+
+Route::get('test-hash', function() {
+    return md5( strtolower( trim( "wallase@example.com " ) ) );
 });

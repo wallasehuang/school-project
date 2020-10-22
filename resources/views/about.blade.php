@@ -157,6 +157,30 @@
     <a href=" https://drive.google.com/file/d/1XPgWzkRkZR_AOygD8CT9cf_0vd6P_0pX/view?usp=sharing">105年度改版認養四聯單</a>
 </div>
 
+<div class="w-full max-w-screen-md mx-auto mb-20">
+    <h2 class="text-center border-b-2 py-10">留言板</h2>
+    <div class="comment-wrapper mb-2 max-h-64 overflow-y-scroll">
+        @foreach($comments as $comment)
+        <div class="comment flex mb-1 items-center">
+            <img class="w-12 h-12"  src="https://robohash.org/{{$comment->user->email}}" alt="">
+            <div class="content">
+                <p class="text-black font-bold leading-tight pt-2">{{$comment->user->name}} <small class="text-gray-500 font-normal ml-1">{{$comment->created_at}}</small></p>
+                <div class="text-black leading-snug">
+                    {{$comment->content}}
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+    <form method="POST" action="{{route('comment')}}" id="comment-form">
+        @csrf
+        <textarea class="border-solid border-2 rounded-lg w-full p-2" name="content" id="" cols="25" rows="10"></textarea>
+        <button type="button" class="py-2 px-3 border border-gray-300 rounded-md text-sm leading-4 font-medium text-gray-700 float-right hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition duration-150 ease-in-out btn-comment">
+            送出
+        </button>
+    </form>
+</div>
+
 @endsection
 
 @section('script')
@@ -177,6 +201,15 @@
             console.log(e);
         });
     })
+
+    $('.btn-comment').click(function(){
+        @if(!Auth::check())
+            alert('請先登入後留言');
+        @else
+            $('#comment-form').submit();
+        @endif
+    })
+
 </script>
 
 @endsection

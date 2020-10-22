@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pet;
+use App\Models\Comment;
 use Auth;
 
 class PetController extends Controller
@@ -33,7 +34,9 @@ class PetController extends Controller
 
         $pets = $pets->paginate(16);
 
-        return view('about', compact('pets'));
+        $comments = Comment::all();
+
+        return view('about', compact('pets', 'comments'));
     }
 
     public function favorites(Request $request)

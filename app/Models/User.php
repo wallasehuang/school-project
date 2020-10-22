@@ -62,4 +62,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Pet', 'user_favorites', 'user_id', 'pet_id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment');
+    }
 }

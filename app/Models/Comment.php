@@ -9,8 +9,19 @@ class Comment extends Model
 {
     use HasFactory;
 
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'content'
+    ];
+
+
     public function user()
     {
-        return $this->hasOne('App\Models\User');
+        return $this->belongsTo('App\Models\User');
     }
 }
